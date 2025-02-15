@@ -92,8 +92,14 @@ function handleEqual() {
     displayAndClear(result);
 }
 
-function handleOperator() {
-    return;
+function handleOperator(operatorPressed) {
+    if (secondOperand === null){
+        operator = operatorPressed;
+    } else {
+        let result = operate(firstOperand, operator, secondOperand);
+        displayAndClear(result);
+        operator = operatorPressed;
+    }
 }
 
 function handleNumber() {
