@@ -84,9 +84,9 @@ function handleEqual() {
     if (operator === "") {
         return;
     } else if (secondOperand === null) {
-        operate(firstOperand, operator, firstOperand);    
+        result = operate(firstOperand, operator, firstOperand);    
     } else {
-        operate(firstOperand, operator, secondOperand);
+        result = operate(firstOperand, operator, secondOperand);
     }
 
     display.textContent = result;
