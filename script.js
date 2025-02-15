@@ -89,10 +89,7 @@ function handleEqual() {
         result = operate(firstOperand, operator, secondOperand);
     }
 
-    display.textContent = result;
-    firstOperand = result;
-    operator = "";
-    secondOperand = null;
+    displayAndClear(result);
 }
 
 function handleOperator() {
@@ -101,4 +98,11 @@ function handleOperator() {
 
 function handleNumber() {
     return;
+}
+
+function displayAndClear(result) {
+    display.textContent = result;
+    firstOperand = result;
+    operator = "";
+    secondOperand = null;
 }
