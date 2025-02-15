@@ -54,7 +54,7 @@ function buttonHandling(event) {
     } else if (btnKey === "=") {
         handleEqual();
     } else if ("+-*/".includes(btnKey)) {
-        handleOperator();
+        handleOperator(btnKey);
     } else {
         handleNumber();
     }
