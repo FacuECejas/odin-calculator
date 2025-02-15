@@ -62,7 +62,10 @@ function buttonHandling(event) {
 }
 
 function handleClear() {
-    return;
+    firstOperand = 0;
+    operator = "";
+    secondOperand = null;
+    display.textContent = firstOperand;
 }
 
 /*To implement later */
