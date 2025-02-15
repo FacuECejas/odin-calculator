@@ -79,7 +79,20 @@ function handleDecimal() {
 }
 
 function handleEqual() {
-    return;
+    let result = 0;
+
+    if (operator === "") {
+        return;
+    } else if (secondOperand === null) {
+        operate(firstOperand, operator, firstOperand);    
+    } else {
+        operate(firstOperand, operator, secondOperand);
+    }
+
+    display.textContent = result;
+    firstOperand = result;
+    operator = "";
+    secondOperand = null;
 }
 
 function handleOperator() {
