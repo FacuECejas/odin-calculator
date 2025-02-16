@@ -144,7 +144,7 @@ function displayAndClear(result) {
     if (result.toString().length > 14) {
         let substring = result.toString().split('.');
 
-        if (substring[0].length > 14) {
+        if (substring[0].length > 14 || substring[1].includes('e')) {
             result = "OUT OF BOUNDS";
             firstOperand = 0;    
         }
@@ -153,7 +153,6 @@ function displayAndClear(result) {
             result = result.toFixed(cut);
             firstOperand = result;
         }
-
     }
 
     display.textContent = result;
