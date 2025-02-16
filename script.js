@@ -133,8 +133,14 @@ function concatToDisplay(number){
 }
 
 function displayAndClear(result) {
-    display.textContent = result;
     firstOperand = result;
+    
+    if (Number.isNaN(result)|| result === Infinity || result === -Infinity){
+        result = "MATH ERROR";
+        firstOperand = 0;
+    }
+
+    display.textContent = result;
     operator = "";
     secondOperand = null;
 }
