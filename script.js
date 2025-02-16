@@ -128,6 +128,8 @@ function concatToDisplay(number){
     let currentDisplay = display.textContent;
 
     if (currentDisplay === "0") currentDisplay = "";
+
+    if(currentDisplay.length === 14) return currentDisplay;
         
     return currentDisplay += number;
 }
@@ -138,6 +140,20 @@ function displayAndClear(result) {
     if (Number.isNaN(result)|| result === Infinity || result === -Infinity){
         result = "MATH ERROR";
         firstOperand = 0;
+    }
+    if (result.toString().length > 14) {
+        let substring = result.toString().split('.');
+
+        if (substring[0].length > 14) {
+            result = "OUT OF BOUNDS";
+            firstOperand = 0;    
+        }
+        else {
+            let cut = 14 - substring[0].length - 1;
+            result = result.toFixed(cut);
+            firstOperand = result;
+        }
+
     }
 
     display.textContent = result;
