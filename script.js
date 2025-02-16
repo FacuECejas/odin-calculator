@@ -2,6 +2,7 @@
 let firstOperand = 0;
 let secondOperand = null;
 let operator = "";
+let noConcat = false;
 
 const add = function(a, b){
     return a + b;
@@ -56,9 +57,8 @@ function buttonHandling(event) {
     } else if ("+-*/".includes(btnKey)) {
         handleOperator(btnKey);
     } else {
-        handleNumber();
+        handleNumber(btnKey);
     }
-
 }
 
 function handleClear() {
@@ -84,9 +84,11 @@ function handleEqual() {
     if (operator === "") {
         return;
     } else if (secondOperand === null) {
-        result = operate(firstOperand, operator, firstOperand);    
+        result = operate(firstOperand, operator, firstOperand);
+        noConcat = true;
     } else {
         result = operate(firstOperand, operator, secondOperand);
+        noConcat = true;
     }
 
     displayAndClear(result);
@@ -102,8 +104,32 @@ function handleOperator(operatorPressed) {
     }
 }
 
-function handleNumber() {
-    return;
+function handleNumber(numberPressed) {
+    
+    if (noConcat) {
+        firstOperand = Number(numberPressed);
+        display.textContent = firstOperand;
+        noConcat = false;
+    }
+    else if(operator === "") {
+        firstOperand = Number(concatToDisplay(numberPressed));
+        display.textContent = firstOperand;
+    } 
+    else if (secondOperand === null) {
+        secondOperand = Number(numberPressed);
+        display.textContent = secondOperand;
+    } else {
+        secondOperand = Number(concatToDisplay(numberPressed));
+        display.textContent = secondOperand;
+    }
+}
+
+function concatToDisplay(number){
+    let currentDisplay = display.textContent;
+
+    if (currentDisplay === "0") currentDisplay = "";
+        
+    return currentDisplay += number;
 }
 
 function displayAndClear(result) {
