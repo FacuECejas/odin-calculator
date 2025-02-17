@@ -53,7 +53,9 @@ function buttonHandling(event) {
         handleDelete();
     } else if (btnKey === "=") {
         handleEqual();
-    } else if ("+-*/".includes(btnKey)) {
+    } else if (btnKey === "+/-") {
+        handleSign();
+    }else if ("+-*/".includes(btnKey)) {
         handleOperator(btnKey);
     } else {
         handleNumber(btnKey);
@@ -107,6 +109,28 @@ function handleEqual() {
     }
 
     displayAndClear(result);
+}
+
+function handleSign(){
+    //Don't do anything to Error messages
+    if (noOperator) return;
+
+    //Don´t do anything on an operator change
+    if(secondOperand === null && operator !== "") return;
+
+    //0 shouldn't change sign
+    if(display.textContent === "0") return;
+
+    let array = display.textContent.split('');
+    
+    //Change number sign
+    if (array[0] === '-') {
+        array.shift();
+    } else {
+        array.unshift('-');
+    }
+
+    display.textContent = array.join('');
 }
 
 function handleOperator(operatorPressed) {
