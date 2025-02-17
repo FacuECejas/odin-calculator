@@ -44,7 +44,6 @@ buttons.forEach((btn)=>{
     btn.addEventListener('click', buttonHandling);
 })
 
-
 window.addEventListener('keydown', keyHandling);
 
 function buttonHandling(event) {
