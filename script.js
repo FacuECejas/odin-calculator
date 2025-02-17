@@ -3,6 +3,7 @@ let firstOperand = 0;
 let secondOperand = null;
 let operator = "";
 let noConcat = false;
+let noOperator = false;
 
 const add = function(a, b){
     return a + b;
@@ -98,26 +99,26 @@ function handleEqual() {
 }
 
 function handleOperator(operatorPressed) {
+
+    if (noOperator) return;
+
     if (secondOperand === null){
         operator = operatorPressed;
-        if (isNaN(Number(display.textContent))) {
-            firstOperand = 0;
-            display.textContent = 0;
-        } else {
-            firstOperand = Number(display.textContent);
-        }
-
+        firstOperand = Number(display.textContent);
+        
         noConcat = false; //To avoid errors by pressing an operator after an equal sign
     }
     else {
         secondOperand = Number(display.textContent);
         let result = operate(firstOperand, operator, secondOperand);
         displayAndClear(result);
-        operator = operatorPressed;
+        if (!noOperator) operator = operatorPressed;
     }
 }
 
 function handleNumber(numberPressed) {
+
+    if (noOperator) noOperator = false;
     
     if (noConcat) {
         display.textContent = numberPressed;
@@ -147,13 +148,23 @@ function displayAndClear(result) {
     
     if (Number.isNaN(result)|| result === Infinity || result === -Infinity){
         result = "MATH ERROR";
+        noOperator = true;
+        noConcat = true;
     }
-    if (result.toString().includes('e')) result = "OUT OF BOUNDS";
+
+    if (result.toString().includes('e')) {
+        result = "OUT OF BOUNDS";
+        noOperator = true;
+        noConcat = true;
+    }
+
     if (result.toString().length > 14) {
         let substring = result.toString().split('.');
 
         if (substring[0].length > 14) {
-            result = "OUT OF BOUNDS";   
+            result = "OUT OF BOUNDS";
+            noOperator = true;
+            noConcat = true;
         }
         else {
             let cut = 14 - substring[0].length - 1;
