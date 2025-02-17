@@ -148,15 +148,16 @@ function displayAndClear(result) {
     if (Number.isNaN(result)|| result === Infinity || result === -Infinity){
         result = "MATH ERROR";
     }
+    if (result.toString().includes('e')) result = "OUT OF BOUNDS";
     if (result.toString().length > 14) {
         let substring = result.toString().split('.');
 
-        if (substring[0].length > 14 || substring[1].includes('e')) {
+        if (substring[0].length > 14) {
             result = "OUT OF BOUNDS";   
         }
         else {
             let cut = 14 - substring[0].length - 1;
-            result = result.toFixed(cut);
+            result = Number(result.toFixed(cut)); //The Number convertion eliminates trailing 0s.
         }
     }
 
