@@ -83,10 +83,13 @@ function handleEqual() {
 
     if (operator === "") {
         return;
-    } else if (secondOperand === null) {
+    }
+    else if (secondOperand === null) {
         result = operate(firstOperand, operator, firstOperand);
         noConcat = true;
-    } else {
+    }
+    else {
+        secondOperand = Number(display.textContent);
         result = operate(firstOperand, operator, secondOperand);
         noConcat = true;
     }
@@ -97,7 +100,17 @@ function handleEqual() {
 function handleOperator(operatorPressed) {
     if (secondOperand === null){
         operator = operatorPressed;
-    } else {
+        if (isNaN(Number(display.textContent))) {
+            firstOperand = 0;
+            display.textContent = 0;
+        } else {
+            firstOperand = Number(display.textContent);
+        }
+
+        noConcat = false; //To avoid errors by pressing an operator after an equal sign
+    }
+    else {
+        secondOperand = Number(display.textContent);
         let result = operate(firstOperand, operator, secondOperand);
         displayAndClear(result);
         operator = operatorPressed;
@@ -107,20 +120,15 @@ function handleOperator(operatorPressed) {
 function handleNumber(numberPressed) {
     
     if (noConcat) {
-        firstOperand = Number(numberPressed);
-        display.textContent = firstOperand;
+        display.textContent = numberPressed;
         noConcat = false;
     }
-    else if(operator === "") {
-        firstOperand = Number(concatToDisplay(numberPressed));
-        display.textContent = firstOperand;
-    } 
-    else if (secondOperand === null) {
-        secondOperand = Number(numberPressed);
-        display.textContent = secondOperand;
-    } else {
-        secondOperand = Number(concatToDisplay(numberPressed));
-        display.textContent = secondOperand;
+    else if (secondOperand === null && operator !== "") {
+        secondOperand = Number(numberPressed); //secondOperand is no longer null
+        display.textContent = numberPressed;
+    }
+    else {
+        display.textContent = concatToDisplay(numberPressed);
     }
 }
 
@@ -139,19 +147,16 @@ function displayAndClear(result) {
     
     if (Number.isNaN(result)|| result === Infinity || result === -Infinity){
         result = "MATH ERROR";
-        firstOperand = 0;
     }
     if (result.toString().length > 14) {
         let substring = result.toString().split('.');
 
         if (substring[0].length > 14 || substring[1].includes('e')) {
-            result = "OUT OF BOUNDS";
-            firstOperand = 0;    
+            result = "OUT OF BOUNDS";   
         }
         else {
             let cut = 14 - substring[0].length - 1;
             result = result.toFixed(cut);
-            firstOperand = result;
         }
     }
 
