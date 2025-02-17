@@ -51,8 +51,6 @@ function buttonHandling(event) {
         handleClear();
     } else if (btnKey === "Del") {
         handleDelete();
-    } else if (btnKey === ".") {
-        handleDecimal();
     } else if (btnKey === "=") {
         handleEqual();
     } else if ("+-*/".includes(btnKey)) {
@@ -71,11 +69,6 @@ function handleClear() {
 
 /*To implement later */
 function handleDelete() {
-    return;
-}
-
-/*To implement later */
-function handleDecimal() {
     return;
 }
 
@@ -121,10 +114,16 @@ function handleNumber(numberPressed) {
     if (noOperator) noOperator = false;
     
     if (noConcat) {
+        if (numberPressed === '.') {
+            numberPressed = '0.'
+        }
         display.textContent = numberPressed;
         noConcat = false;
     }
     else if (secondOperand === null && operator !== "") {
+        if (numberPressed === '.') {
+            numberPressed = '0.'
+        }
         secondOperand = Number(numberPressed); //secondOperand is no longer null
         display.textContent = numberPressed;
     }
@@ -136,10 +135,12 @@ function handleNumber(numberPressed) {
 function concatToDisplay(number){
     let currentDisplay = display.textContent;
 
-    if (currentDisplay === "0") currentDisplay = "";
+    if (currentDisplay === "0" && number !== '.') currentDisplay = "";
 
     if(currentDisplay.length === 14) return currentDisplay;
-        
+    
+    if (currentDisplay.includes('.') && number === '.') return currentDisplay;
+
     return currentDisplay += number;
 }
 
