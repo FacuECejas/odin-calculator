@@ -44,6 +44,9 @@ buttons.forEach((btn)=>{
     btn.addEventListener('click', buttonHandling);
 })
 
+
+window.addEventListener('keydown', keyHandling);
+
 function buttonHandling(event) {
     let btnKey = event.target.textContent;
 
@@ -55,10 +58,24 @@ function buttonHandling(event) {
         handleEqual();
     } else if (btnKey === "+/-") {
         handleSign();
-    }else if ("+-*/".includes(btnKey)) {
+    } else if ("+-*/".includes(btnKey)) {
         handleOperator(btnKey);
     } else {
         handleNumber(btnKey);
+    }
+}
+
+function keyHandling(event) {
+    let key = event.key;
+
+    if (key === "Backspace") {
+        handleDelete();
+    } else if (key === "=") {
+        handleEqual();
+    } else if ("+-*/".includes(key)) {
+        handleOperator(key);
+    } else if ("1234567890.".includes(key)) {
+        handleNumber(key);
     }
 }
 
