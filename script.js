@@ -67,9 +67,27 @@ function handleClear() {
     display.textContent = firstOperand;
 }
 
-/*To implement later */
 function handleDelete() {
-    return;
+    //Don't do anything to Error messages
+    if (noOperator) return;
+    
+    //Delete an operator
+    if (secondOperand === null & operator !== "") {
+        operator = "";
+    } 
+    else { //Delete number
+        let array = display.textContent.split('');
+        array.pop();
+        if (array.length === 0 && secondOperand !== null) {
+            secondOperand = null;
+            display.textContent = firstOperand;
+        } else if (array.length === 0 && secondOperand === null){
+            display.textContent = 0;
+        } else {
+            display.textContent = array.join('');;
+        }
+    }
+
 }
 
 function handleEqual() {
